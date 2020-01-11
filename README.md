@@ -2,9 +2,8 @@
 
 A browser simulation of the Victorian-era pendulum device to draw patterns on paper.
 
-Here is the [live demo](https://gje7g.csb.app/) using CodeSandbox.
+[Live demo](https://doncross.net/harmonograph/).
 
-Here is the [sandbox](https://codesandbox.io/s/harmonograph-gje7g) itself, if you want to tinker with the code live.
+[Sandbox](https://codesandbox.io/s/harmonograph-gje7g), if you want to tinker with the code live.
 
 ![Harmonograph Image](harmonograph.png)
-
