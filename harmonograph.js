@@ -89,15 +89,9 @@ window.onload = function() {
     }
 
     function ResizeGraph() {
-        // Calculate "ideal" graph dimensions as a function of the window dimensions.
-        let gwidth = window.innerWidth;
-        let gheight = window.innerHeight;
-
-        // Resize the graph canvas if needed.
-        if (graph.width !== gwidth || graph.height !== gheight) {
-            graph.width = gwidth;
-            graph.height = gheight;
-        }
+        // Make the canvas fit the available space inside the browser window.
+        graph.width = window.innerWidth;
+        graph.height = window.innerHeight;
     }
 
     ResizeGraph();
