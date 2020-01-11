@@ -65,8 +65,9 @@ window.onload = function() {
         const size = Math.min(graph.width, graph.height);
         const scale = 1.45 * size / 1000;
         context.beginPath();
-        let v;
-        for (let t=0; (v = harm.Calculate(t)).r > limit; t += dt) {
+        for (let t=0; ; t += dt) {
+            const v = harm.Calculate(t);
+            if (v.r < limit) break;
             const x = scale*v.x + cx;
             const y = scale*v.y + cy;
             if (t === 0) {
