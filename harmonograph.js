@@ -59,27 +59,20 @@ window.onload = function() {
         const harm = MakeHarmonograph(time);
         context.clearRect(0, 0, graph.width, graph.height);
         const dt = 0.5;
-        let t = 0;
-        let n = 0;
         let cx = graph.width / 2;
         let cy = graph.height / 2;
         const limit = 20;
-        const scale = 1.5 * Math.min(graph.width, graph.height) / 1000;
+        const scale = 1.45 * Math.min(graph.width, graph.height) / 1000;
         context.beginPath();
-        for(;;++n) {
-            const v = harm.Calculate(t);
-            //console.log(v);
-            if (v.r < limit) {
-                break;
-            }
+        let v;
+        for (let t=0; (v = harm.Calculate(t)).r > limit; t += dt) {
             const x = scale*v.x + cx;
             const y = scale*v.y + cy;
-            if (n === 0) {
+            if (t === 0) {
                 context.moveTo(x, y);
             } else {
                 context.lineTo(x, y);
             }
-            t += dt;
         }
         context.strokeStyle = 'rgb(0,0,0)';
         context.stroke();
