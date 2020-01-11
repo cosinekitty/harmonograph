@@ -43,21 +43,27 @@ window.onload = function() {
 
     const graph = document.getElementById("GraphCanvas");
     const context = graph.getContext('2d');
-    const halflife = 5000;
 
-    const harm = new Harmonograph([
-        new Pendulum(220, 50, 3.0, 20.0, halflife),
-        new Pendulum(30, 100, 3.01, 10.0, halflife),
-        new Pendulum(100, 100, 6.0247, 0.0, halflife)
-    ]);
+    function MakeHarmonograph(time) {
+        const halflife = 3000;
 
-    function Render() {
+        return new Harmonograph([
+            new Pendulum(220, 50, 3.0, time * 0.0101, halflife),
+            new Pendulum(30, 100, 9.01, 10.0 + time * 0.0731, halflife),
+            new Pendulum(100, 100, 6.0247, time * 0.00134, halflife)
+        ]);
+    }
+
+    function Render(time) {
+        const harm = MakeHarmonograph(time);
+        context.clearRect(0, 0, graph.width, graph.height);
         const dt = 1;
         let t = 0;
         let n = 0;
         let cx = graph.width / 2;
         let cy = graph.height / 2;
         const limit = 20;
+        const scale = 1.4;
         context.beginPath();
         for(;;++n) {
             const v = harm.Calculate(t);
@@ -65,10 +71,12 @@ window.onload = function() {
             if (v.r < limit) {
                 break;
             }
+            const x = scale*v.x + cx;
+            const y = scale*v.y + cy;
             if (n === 0) {
-                context.moveTo(v.x + cx, v.y + cy);
+                context.moveTo(x, y);
             } else {
-                context.lineTo(v.x + cx, v.y + cy);
+                context.lineTo(x, y);
             }
             t += dt;
         }
@@ -77,8 +85,8 @@ window.onload = function() {
     }
 
     function timerTick(time) {
-        Render();
-        //requestAnimationFrame(timerTick);
+        Render(time);
+        requestAnimationFrame(timerTick);
     }
 
     requestAnimationFrame(timerTick);
