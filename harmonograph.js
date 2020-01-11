@@ -58,13 +58,13 @@ window.onload = function() {
     function Render(time) {
         const harm = MakeHarmonograph(time);
         context.clearRect(0, 0, graph.width, graph.height);
-        const dt = 1;
+        const dt = 0.5;
         let t = 0;
         let n = 0;
         let cx = graph.width / 2;
         let cy = graph.height / 2;
         const limit = 20;
-        const scale = 1.4;
+        const scale = 1.5 * Math.min(graph.width, graph.height) / 1000;
         context.beginPath();
         for(;;++n) {
             const v = harm.Calculate(t);
@@ -90,23 +90,19 @@ window.onload = function() {
         requestAnimationFrame(timerTick);
     }
 
+    function ResizeGraph() {
+        // Calculate "ideal" graph dimensions as a function of the window dimensions.
+        let gwidth = window.innerWidth;
+        let gheight = window.innerHeight;
+
+        // Resize the graph canvas if needed.
+        if (graph.width !== gwidth || graph.height !== gheight) {
+            graph.width = gwidth;
+            graph.height = gheight;
+        }
+    }
+
+    ResizeGraph();
+    window.addEventListener('resize', ResizeGraph);
     requestAnimationFrame(timerTick);
 }
-
-/*
-    https://stackoverflow.com/questions/7054272/how-to-draw-smooth-curve-through-n-points-using-javascript-html5-canvas
-
-    var points = [{x:1,y:1},{x:2,y:3},{x:3,y:4},{x:4,y:2},{x:5,y:6}] //took 5 example points
-    ctx.moveTo((points[0].x), points[0].y);
-
-    for(var i = 0; i < points.length-1; i ++)
-    {
-
-    var x_mid = (points[i].x + points[i+1].x) / 2;
-    var y_mid = (points[i].y + points[i+1].y) / 2;
-    var cp_x1 = (x_mid + points[i].x) / 2;
-    var cp_x2 = (x_mid + points[i+1].x) / 2;
-    ctx.quadraticCurveTo(cp_x1,points[i].y ,x_mid, y_mid);
-    ctx.quadraticCurveTo(cp_x2,points[i+1].y ,points[i+1].x,points[i+1].y);
-    }
-*/
