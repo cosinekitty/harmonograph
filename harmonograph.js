@@ -62,7 +62,8 @@ window.onload = function() {
         let cx = graph.width / 2;
         let cy = graph.height / 2;
         const limit = 20;
-        const scale = 1.45 * Math.min(graph.width, graph.height) / 1000;
+        const size = Math.min(graph.width, graph.height);
+        const scale = 1.45 * size / 1000;
         context.beginPath();
         let v;
         for (let t=0; (v = harm.Calculate(t)).r > limit; t += dt) {
@@ -74,7 +75,10 @@ window.onload = function() {
                 context.lineTo(x, y);
             }
         }
-        context.strokeStyle = 'rgb(0,0,0)';
+        const gradient = context.createRadialGradient(cx, cy, limit, cx, cy, size/2);
+        gradient.addColorStop(0, 'rgb(10,20,200)');
+        gradient.addColorStop(0.7, 'rgb(200,100,15)');
+        context.strokeStyle = gradient;
         context.stroke();
     }
 
