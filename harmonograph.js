@@ -46,11 +46,12 @@ window.onload = function() {
 
     function MakeHarmonograph(time) {
         const halflife = 3000;
+        const angle = 0.3 * time;
 
         return new Harmonograph([
-            new Pendulum(220, 50, 3.0, time * 0.0101, halflife),
-            new Pendulum(30, 100, 9.01, 10.0 + time * 0.0731, halflife),
-            new Pendulum(100, 100, 6.0247, time * 0.00134, halflife)
+            new Pendulum(220, 50, 3.0, angle * 0.0101, halflife),
+            new Pendulum(30, 100, 9.01, 10.0 + angle * 0.0731, halflife),
+            new Pendulum(100, 100, 6.0247, angle * 0.00134, halflife)
         ]);
     }
 
