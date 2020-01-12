@@ -41,17 +41,24 @@ window.onload = function() {
         }
     }
 
+    const ReservedPixelsBottom = 70;
     const graph = document.getElementById("GraphCanvas");
     const context = graph.getContext('2d');
+    const frequencySlider1 = document.getElementById('FrequencySlider1');
+    const frequencySlider2 = document.getElementById('FrequencySlider2');
+    const frequencySlider3 = document.getElementById('FrequencySlider3');
 
     function MakeHarmonograph(time) {
         const halflife = 3000;
         const angle = 0.3 * time;
+        const freq1 = parseFloat(frequencySlider1.value);
+        const freq2 = parseFloat(frequencySlider2.value);
+        const freq3 = parseFloat(frequencySlider3.value);
 
         return new Harmonograph([
-            new Pendulum(220, 50, 3.0, angle * 0.0101, halflife),
-            new Pendulum(30, 100, 9.01, 10.0 + angle * 0.0731, halflife),
-            new Pendulum(100, 100, 6.0247, angle * 0.00134, halflife)
+            new Pendulum(220, 50, freq1, angle * 0.0101, halflife),
+            new Pendulum(30, 100, freq2, 10.0 + angle * 0.0731, halflife),
+            new Pendulum(100, 100, freq3, angle * 0.00134, halflife)
         ]);
     }
 
@@ -90,8 +97,21 @@ window.onload = function() {
 
     function ResizeGraph() {
         // Make the canvas fit the available space inside the browser window.
+        // Reserve some space below the graph for sliders.
         graph.width = window.innerWidth;
-        graph.height = window.innerHeight;
+        graph.height = window.innerHeight - ReservedPixelsBottom;
+
+        // Resize the sliders to fit in the reserved space beneath the graph.
+        const xgap = 20;        // number of pixels of horizontal space between the sliders
+        const yspace = 10;      // pixels of vertical "cushion" for sliders
+        const sliderWidth = (graph.width/3 - xgap).toFixed() + 'px';
+        const sliderHeight = (ReservedPixelsBottom - yspace).toFixed() + 'px';
+        frequencySlider1.style.width = sliderWidth;
+        frequencySlider2.style.width = sliderWidth;
+        frequencySlider3.style.width = sliderWidth;
+        frequencySlider1.style.height = sliderHeight;
+        frequencySlider2.style.height = sliderHeight;
+        frequencySlider3.style.height = sliderHeight;
     }
 
     ResizeGraph();
