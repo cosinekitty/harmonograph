@@ -88,6 +88,16 @@ window.onload = function() {
         gradient.addColorStop(0.7, 'rgb(200,100,15)');
         context.strokeStyle = gradient;
         context.stroke();
+
+        // Render frequency slider values as text on the graph.
+        context.font = '16px monospace';
+        context.fillStyle = 'rgb(0,0,0)';
+        const x1 = graph.width*(1/6) - 60;
+        const x2 = graph.width*(1/2) - 60;
+        const x3 = graph.width*(5/6) - 60;
+        context.fillText('F1=' + parseFloat(frequencySlider1.value).toFixed(4), x1, graph.height-8);
+        context.fillText('F2=' + parseFloat(frequencySlider2.value).toFixed(4), x2, graph.height-8);
+        context.fillText('F3=' + parseFloat(frequencySlider3.value).toFixed(4), x3, graph.height-8);
     }
 
     function timerTick(time) {
